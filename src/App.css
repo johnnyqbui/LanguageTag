@@ -1,0 +1,36 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.preview-container img {
+  width: 100%;
+}
+
+.drop-zone {
+  display: flex;
+  justify-content: center;
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.drop-zone {
+  width: 30%;
+}
+
+.preview-container {
+  width: 30%;
+}
+
+.clarifai-info {
+  width: 30%;
+}
+
