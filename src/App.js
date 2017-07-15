@@ -12,7 +12,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isLoading: 'true',
+      isLoading: '',
       fileName: '',
       fileSize: null,
       fileType: '',
@@ -27,10 +27,13 @@ class App extends Component {
       apiKey: `c82a97c774c94a01afd42f8f49f9bb8c`
     })
 
-    app.models.predict(Clarifai.GENERAL_MODEL,
+    app.models.predict(Clarifai.TRAVEL_MODEL,
       {base64: base64}).then(
       (response) => {
-        this.setState({ clarifaiData: response.outputs[0].data.concepts })
+        this.setState({
+          clarifaiData: response.outputs[0].data.concepts,
+          isLoading: false
+        })
       },
       (err) => {
         console.log(err, 'error')
@@ -48,13 +51,15 @@ class App extends Component {
         fileName: file.name,
         fileSize: file.size,
         fileType: file.type,
-        fileBase64: reader.result
+        fileBase64: reader.result,
+        isLoading: true
       })
 
       // Convert the file to base64 text
       let base64Preview = reactStringReplace(
         reader.result, /^data:image\/(.*);base64,/,
-        (match) => {match})
+        (match) => {match}
+      )
       this.clarifaiData(base64Preview[2])
     }
   }
@@ -72,7 +77,10 @@ class App extends Component {
           fileType={this.state.fileType}
           fileBase64={this.state.fileBase64}
         />
-        <ClarifaiInformation clarifaiData={this.state.clarifaiData}/>
+        <ClarifaiInformation
+          clarifaiData={this.state.clarifaiData}
+          isLoading={this.state.isLoading}
+        />
       </div>
     );
   }

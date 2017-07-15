@@ -2,10 +2,12 @@ import React from 'react';
 
 const imageSubmit = (props) => {
 	return (
-		<input
-	        type="file"
-	        onChange={ props.onSubmit.bind(this) }
-        />
+		<div className="img-submit">
+			<input
+		        type="file"
+		        onChange={ props.onSubmit.bind(this) }
+	        />
+        </div>
 	)
 }
 

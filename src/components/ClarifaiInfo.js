@@ -1,15 +1,15 @@
 import React from 'react';
 
 const clarifaiInfo = (props) => {
-	const data = props.clarifaiData.map((element) => {
-		return <div>
+	const { clarifaiData, isLoading } = props;
+	const data = clarifaiData.map((element, index) => {
+		return <li key={index}>
 					{element.name} - {(element.value*100).toFixed(2)+'%'}
-				</div>
+				</li>
 	})
-
 	return (
 		<div className="clarifai-info">
-			<ul>{data}</ul>
+			{isLoading ? <ul>Loading...</ul> : <ul>{data}</ul>}
 		</div>
 	)
 }
