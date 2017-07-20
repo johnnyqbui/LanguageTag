@@ -21,3 +21,18 @@
   list-style-type: none;
 }
 
+.img-submit {
+	cursor: pointer;
+	border: 5px dashed #ccc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30%;
+	height: 300px;
+	margin: 50px;
+}
+
+.img-submit input[type="file"] {
+	display: none;
+}
+

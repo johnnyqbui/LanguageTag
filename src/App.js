@@ -27,7 +27,7 @@ class App extends Component {
       apiKey: `c82a97c774c94a01afd42f8f49f9bb8c`
     })
 
-    app.models.predict(Clarifai.TRAVEL_MODEL,
+    app.models.predict(Clarifai.GENERAL_MODEL,
       {base64: base64}).then(
       (response) => {
         this.setState({
@@ -43,9 +43,9 @@ class App extends Component {
 
   handleSubmit(e) {
     let file = e.target.files[0];
-    let reader = new FileReader()
+    let reader = new FileReader();
+    file ? reader.readAsDataURL(file) : false;
 
-    reader.readAsDataURL(file)
     reader.onload = () => {
       this.setState({
         fileName: file.name,
@@ -68,8 +68,8 @@ class App extends Component {
     return (
       <div className="App">
         <ImageSubmit
-          className='drop-zone'
           onSubmit={this.handleSubmit.bind(this)}
+          isLoading={this.state.isLoading}
         />
         <ImagePreview
           fileName={this.state.fileName}
