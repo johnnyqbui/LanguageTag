@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Image = (props) => {
-	const { fileName, fileSize, fileType, fileBase64 } = props;
+	const { fileName, fileSize, fileType, filePreview } = props;
 	return (
 		<div className="preview-container">
 			<p>{fileName}</p>
-			<img src={fileBase64} />
+			<img src={filePreview} />
 		</div>
 	)
 }

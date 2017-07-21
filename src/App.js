@@ -6,7 +6,8 @@ import ImagePreview from './components/ImagePreview';
 import ClarifaiInformation from './components/ClarifaiInfo';
 import Clarifai from 'clarifai';
 import reactStringReplace from 'react-string-replace';
-const API_KEY = 'c82a97c774c94a01afd42f8f49f9bb8c';
+import C_API_KEY from './api/clarifai';
+import G_API_KEY from './api/googleTranslate';
 
 class App extends Component {
   constructor(props) {
@@ -16,22 +17,28 @@ class App extends Component {
       fileName: '',
       fileSize: null,
       fileType: '',
+      filePreview: '',
       fileBase64: '',
       clarifaiData: [],
+      tagNames: [],
       value: null
     }
   }
 
-  clarifaiData(base64) {
+  componentDidMount() {
+    console.log(this.state.tagNames)
     const app = new Clarifai.App({
-      apiKey: `c82a97c774c94a01afd42f8f49f9bb8c`
+      apiKey: `${C_API_KEY}`
     })
-
     app.models.predict(Clarifai.GENERAL_MODEL,
-      {base64: base64}).then(
+      {base64: this.state.fileBase64}).then(
       (response) => {
+        let clarifaiTagNames = response.outputs[0].data.concepts.map((element) => {
+          return element.name
+        });
         this.setState({
           clarifaiData: response.outputs[0].data.concepts,
+          tagNames: clarifaiTagNames,
           isLoading: false
         })
       },
@@ -39,28 +46,69 @@ class App extends Component {
         console.log(err, 'error')
       }
     )
+
+    const googleTranslateUrl = 'https://translation.googleapis.com/language/translate/v2?';
+    let translated = this.state.tagNames.map((element) => {
+      let translationURL = `${googleTranslateUrl}`+'key='+`${G_API_KEY}`+'+&q='+element+'&target=es'
+      fetch(translationURL)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      return translationURL
+    })
   }
+
+  // clarifaiData(base64) {
+  //   const app = new Clarifai.App({
+  //     apiKey: `${C_API_KEY}`
+  //   })
+  //   app.models.predict(Clarifai.GENERAL_MODEL,
+  //     {base64: base64}).then(
+  //     (response) => {
+  //       let clarifaiTagNames = response.outputs[0].data.concepts.map((element) => {
+  //         return element.name
+  //       });
+  //       this.setState({
+  //         clarifaiData: response.outputs[0].data.concepts,
+  //         tagNames: clarifaiTagNames,
+  //         isLoading: false
+  //       })
+  //     },
+  //     (err) => {
+  //       console.log(err, 'error')
+  //     }
+  //   )
+  // }
 
   handleSubmit(e) {
     let file = e.target.files[0];
     let reader = new FileReader();
     file ? reader.readAsDataURL(file) : false;
+    let base64 = reactStringReplace(
+      reader.result, /^data:image\/(.*);base64,/,
+      (match) => {match}
+    )
 
     reader.onload = () => {
+            console.log('run reader')
+
       this.setState({
         fileName: file.name,
         fileSize: file.size,
         fileType: file.type,
-        fileBase64: reader.result,
+        filePreview: reader.result,
+        fileBase64: base64,
         isLoading: true
       })
 
+
       // Convert the file to base64 text
-      let base64Preview = reactStringReplace(
-        reader.result, /^data:image\/(.*);base64,/,
-        (match) => {match}
-      )
-      this.clarifaiData(base64Preview[2])
+
+
+      // this.clarifaiData(base64Preview[2])
     }
   }
 
@@ -75,10 +123,11 @@ class App extends Component {
           fileName={this.state.fileName}
           fileSize={this.state.fileSize}
           fileType={this.state.fileType}
-          fileBase64={this.state.fileBase64}
+          filePreview={this.state.filePreview}
         />
         <ClarifaiInformation
           clarifaiData={this.state.clarifaiData}
+          tagNames={this.state.tagNames}
           isLoading={this.state.isLoading}
         />
       </div>
