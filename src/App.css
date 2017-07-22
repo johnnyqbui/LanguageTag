@@ -22,12 +22,15 @@
 }
 
 .img-submit {
+	width: 30%;
+}
+
+.img-submit label {
 	cursor: pointer;
 	border: 5px dashed #ccc;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 30%;
 	height: 300px;
 	margin: 50px;
 }
