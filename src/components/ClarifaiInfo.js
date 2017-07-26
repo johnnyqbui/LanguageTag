@@ -1,11 +1,18 @@
 import React from 'react';
 
 const clarifaiInfo = (props) => {
-	const { clarifaiData, isLoading } = props;
-	const data = clarifaiData.map((element, index) => {
-		return <li key={index}>
-					{element.name} - {(element.value*100).toFixed(2)+'%'}
-				</li>
+	const { translatedData, language, isLoading } = props;
+	const data = translatedData.map((data, index) => {
+		if (data.hasOwnProperty('combinedData')) {
+			let info = data.combinedData;
+			return <li key={index}>
+				{info.translatedText} - {info.name} - {(info.value*100).toFixed(2)+'%'}
+			</li>
+		} else {
+			return <li key={index}>
+				{data.name} - {(data.value*100).toFixed(2)+'%'}
+			</li>
+		}
 	})
 	return (
 		<div className="clarifai-info">

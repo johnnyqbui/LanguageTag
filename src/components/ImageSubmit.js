@@ -1,20 +1,36 @@
 import React from 'react';
-import LanguagesOption from './LanguagesOption';
 
 const imageSubmit = (props) => {
-	const { isLoading } = props;
+	const {
+		inputText,
+		isLoading,
+		onChange,
+		onSubmit,
+		onUpload,
+		onKeyUp } = props;
 	return (
-		<div className="img-submit">
+		<div className='img-submit'>
 			<label>
 				Drop images or click to upload
 		        <input
 			        type="file"
-			        onChange={ props.onSubmit.bind(this) }
+			        onChange={ onUpload }
 			       	disabled={ isLoading }
 		        />
 
 	        </label>
-	        <LanguagesOption />
+	        <input
+	        	type="text"
+	        	value={ inputText }
+	        	onChange={ onChange }
+	        	onKeyUp={ onKeyUp }
+	        	placeholder="Paste in the image URL"
+	        />
+	        <input
+	        	type="submit"
+	        	value="Submit"
+	        	onClick={ onSubmit }
+	        />
         </div>
 	)
 }
