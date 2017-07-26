@@ -7,7 +7,8 @@ const imageSubmit = (props) => {
 		onChange,
 		onSubmit,
 		onUpload,
-		onKeyUp } = props;
+		onKeyUp,
+		errorMessage } = props;
 	return (
 		<div className='img-submit'>
 			<label>
@@ -19,6 +20,7 @@ const imageSubmit = (props) => {
 		        />
 
 	        </label>
+	        <p>{errorMessage}</p>
 	        <input
 	        	type="text"
 	        	value={ inputText }

@@ -21,7 +21,8 @@ class App extends Component {
       languageCode: '',
       translatedData: [],
       inputText: '',
-      submittedURL: ''
+      submittedURL: '',
+      errorMessage: ''
     }
   }
 
@@ -32,11 +33,15 @@ class App extends Component {
     // Translate text from clarifai data
     clarifaiData.then((clarifaiInfo)=> {
       let translated = translate(clarifaiInfo, languageCode);
-      Promise.all(translated).then(data => {
+      Promise.all(translated)
+      .then(data => {
         this.setState({
           isLoading: false,
           translatedData: data
         })
+      })
+      .catch(err => {
+        console.log(err, 'Invalid image URL')
       })
     })
   }
@@ -49,16 +54,18 @@ class App extends Component {
     this.setState({ inputText: e.target.value })
   }
 
-  // If 'enter' key is pressed
-  handleKeyUp = (e) => {
-    e.keyCode === 13 ? this.handleSubmit() : ''
-  }
-
   // For Image URLs
-  handleSubmit = () => {
-    this.setState({ submittedURL: this.state.inputText })
+  handleSubmit = (e) => {
+    let inputText = this.state.inputText;
 
-    this.getClarifaiData(this.state.inputText);
+    // if enter key pressed or submit button is clicked
+    if (e.keyCode === 13 || e.target.type === 'submit' && inputText.match(/.(jpeg|jpg|gif|png)$/i)) {
+      this.getClarifaiData(inputText)
+      this.setState({ submittedURL: inputText })
+    } else {
+      this.setState({ errorMessage: 'Please submit valid image types' })
+      return false;
+    }
   }
 
   // For image uploads
@@ -90,11 +97,12 @@ class App extends Component {
       <div className='App'>
         <ImageSubmit
           onChange={this.handleInputChange}
+          onKeyUp={this.handleSubmit}
           onSubmit={this.handleSubmit}
           onUpload={this.handleUpload}
-          onKeyUp={this.handleKeyUp}
           inputText={this.state.inputText}
           isLoading={this.state.isLoading}
+          errorMessage={this.state.errorMessage}
         />
         <LanguagesOption
           onChange={this.handleLanguageChange}
