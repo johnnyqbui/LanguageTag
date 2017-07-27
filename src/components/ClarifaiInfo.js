@@ -1,7 +1,7 @@
 import React from 'react';
 
 const clarifaiInfo = (props) => {
-	const { translatedData, language, isLoading } = props;
+	const { translatedData, isLoading } = props;
 	const data = translatedData.map((data, index) => {
 		if (data.hasOwnProperty('combinedData')) {
 			let info = data.combinedData;

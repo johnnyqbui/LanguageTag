@@ -1,0 +1,36 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.preview-container {
+  width: 30%;
+  img {
+  	width: 100%;
+  }
+}
+
+.clarifai-info {
+  width: 30%;
+  ul li {
+  	list-style-type: none;
+  }
+}
+
+.img-submit {
+	width: 30%;
+	label {
+		cursor: pointer;
+		border: 5px dashed #ccc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 300px;
+		margin: 50px;
+	}
+	input[type="file"] {
+		display: none;
+	}
+}

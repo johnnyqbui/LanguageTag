@@ -1,17 +1,11 @@
 import React from 'react';
 
 const Image = (props) => {
-	const {
-		inputText,
-		fileName,
-		fileSize,
-		fileType,
-		fileBase64 } = props;
-	const imgSrc = inputText ? inputText : fileBase64;
+	const { fileName, imgPreview } = props;
+	const imgSrc = imgPreview ? <img src={imgPreview} alt={fileName}/> : '';
 	return (
 		<div className="preview-container">
-			<p>{fileName}</p>
-			<img src={imgSrc} />
+			{imgSrc}
 		</div>
 	)
 }

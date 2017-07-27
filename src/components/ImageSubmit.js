@@ -16,6 +16,7 @@ const imageSubmit = (props) => {
 		        <input
 			        type="file"
 			        onChange={ onUpload }
+			        onClick={ evt => {evt.target.value=null} }
 			       	disabled={ isLoading }
 		        />
 

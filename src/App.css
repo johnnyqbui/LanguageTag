@@ -2,40 +2,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-}
+  height: 100vh; }
 
 .preview-container {
-  width: 30%;
-}
-
-.preview-container img {
-  width: 100%;
-}
+  width: 30%; }
+  .preview-container img {
+    width: 100%; }
 
 .clarifai-info {
-  width: 30%;
-}
-
-.clarifai-info ul li {
-  list-style-type: none;
-}
+  width: 30%; }
+  .clarifai-info ul li {
+    list-style-type: none; }
 
 .img-submit {
-	width: 30%;
-}
-
-.img-submit label {
-	cursor: pointer;
-	border: 5px dashed #ccc;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 300px;
-	margin: 50px;
-}
-
-.img-submit input[type="file"] {
-	display: none;
-}
-
+  width: 30%; }
+  .img-submit label {
+    cursor: pointer;
+    border: 5px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin: 50px; }
+  .img-submit input[type="file"] {
+    display: none; }

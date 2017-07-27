@@ -15,7 +15,7 @@ const clarifaiData = (file) => {
         });
       },
       (err) => {
-        console.log(err, 'error')
+        console.log(err)
       }
     )
 }
